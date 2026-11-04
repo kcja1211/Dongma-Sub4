@@ -26,12 +26,12 @@ h1{font-size:20px;margin:0 0 3px}.sub{font-size:12px;color:var(--muted)}
 .month-head h2{margin:0;font-size:24px}.month-head span{font-size:11px;color:var(--muted)}
 .weekdays,.grid{display:grid;grid-template-columns:repeat(7,1fr)}
 .weekdays div{text-align:center;font-size:12px;font-weight:700;padding:7px 0}
-.weekdays div:nth-child(6){color:#5170d6}.weekdays div:nth-child(7){color:#e45268}
+.weekdays div:nth-child(1){color:#e45268}.weekdays div:nth-child(7){color:#5170d6}
 .day{min-height:118px;background:#fff;border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:5px 4px}
 .day:nth-child(7n){border-right:none}
 .day.muted{background:#fafafa;color:#b9bbb6}
 .num{font-size:12px;font-weight:800;margin-bottom:5px}
-.day:nth-child(7n+6) .num{color:#5170d6}.day:nth-child(7n+7) .num{color:#e45268}
+.day:nth-child(7n+1) .num{color:#e45268}.day:nth-child(7n+7) .num{color:#5170d6}
 .item{display:flex;gap:4px;align-items:flex-start;border-radius:7px;padding:5px 4px;margin:3px 0;font-size:9.5px;line-height:1.2}
 .item input{width:13px;height:13px;margin:0;flex:none;accent-color:#344f47}
 .item:has(input:checked) span{text-decoration:line-through;opacity:.45}
@@ -48,7 +48,7 @@ h1{font-size:20px;margin:0 0 3px}.sub{font-size:12px;color:var(--muted)}
 <div class="app">
 <header>
   <h1>전성희 · 동아마라톤 SUB4</h1>
-  <div class="sub">2027.03.21 · 월간 체크 캘린더</div>
+  <div class="sub">2027.03.21 · 일요일 시작 월간 체크 캘린더</div>
   <div class="tabs" id="tabs"></div>
   <button class="install" id="installBtn">홈 화면에 설치</button>
 </header>
@@ -104,11 +104,11 @@ months.forEach(([y,m],idx)=>{
  const b=document.createElement('button'); b.textContent=monthNames[m]; if(idx===0)b.classList.add('active'); tabs.appendChild(b);
  const sec=document.createElement('section'); sec.className='month'+(idx===0?' active':'');
  sec.innerHTML=`<div class="month-head"><h2>${y}년 ${monthNames[m]}</h2><span>${idx===4?'TAPER / RACE':'BUILD'}</span></div>
- <div class="weekdays">${["월","화","수","목","금","토","일"].map(x=>`<div>${x}</div>`).join("")}</div><div class="grid"></div>`;
+ <div class="weekdays">${["일","월","화","수","목","금","토"].map(x=>`<div>${x}</div>`).join("")}</div><div class="grid"></div>`;
  wrap.appendChild(sec);
  b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.month').forEach(x=>x.classList.remove('active'));sec.classList.add('active')};
  const grid=sec.querySelector('.grid');
- let first=new Date(y,m-1,1), start=(first.getDay()+6)%7;
+ let first=new Date(y,m-1,1), start=first.getDay();
  let cur=new Date(y,m-1,1-start);
  for(let i=0;i<42;i++){
   const inMonth=cur.getMonth()===m-1, key=fmt(cur);
